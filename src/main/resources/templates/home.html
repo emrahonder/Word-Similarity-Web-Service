@@ -11,7 +11,6 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
 </head>
-
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -28,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="word">Word</label>
-            <input type="text" class="form-control" id="word" name="word" placeholder="word">
+            <input type="text" class="form-control" id="word" name="word" placeholder="Target Word">
             <small id="wordHelp" class="form-text text-muted">Please enter the target word</small>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -37,7 +36,7 @@
     <div id="results">
         <h2>Result Set</h2>
         <div id="frequency"><label>Frequecy:</label><span></span></div>
-        <div id="similarWords"><label>Similar Words:</label><span></span></div>
+        <div id="similarWords"><label>Similar Word(s):</label><span></span></div>
     </div>
 
 </main>
@@ -45,7 +44,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script th:src="@{/js/script.js}"></script>
-
 
 </body>
 </html>
