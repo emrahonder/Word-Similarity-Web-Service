@@ -50,7 +50,8 @@ http://localhost:8080
 
 
 ## Further
-I have spent to build this application appr. 3 hours. If I would have more time, , I would like to
+I have spent to build this application appr. 3 hours. 
+If I would have more time, I would like to
 
  - instead of a monolitic application, divide these as BE and FE project and build FE project with Vue.JS etc.
  - add more validations in BE and FE projects
