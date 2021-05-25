@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ViewController {
+    private final static String HOME_TEMPLATE = "home";
+
     @GetMapping("/")
     public String main(Model model) {
-        return "home"; //view
+        return HOME_TEMPLATE;
     }
 }
