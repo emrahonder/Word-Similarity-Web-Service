@@ -3,8 +3,10 @@ package com.nioya.similarity.service;
 
 import com.nioya.similarity.model.Similarity;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,12 +17,11 @@ public class SimilarityService {
     private final static int THRESHOLD = 1;
     private final static int EXACT_MATCH = 0;
     private final static int SIMILAR_MATCH = 1;
-    private final static String SPLIT_REGEX = " ";
 
     public static Similarity getSimilarity(String notebook, String word) {
         log.info("Requested: notebook entry={}, search key={}", notebook, word);
 
-        List<String> entries = Arrays.asList(notebook.split(SPLIT_REGEX));
+        List<String> entries = Arrays.asList(notebook.split(StringUtils.SPACE));
         Similarity similarity = Similarity.builder().build();
         entries.stream().forEach(entry -> calculate(entry, word, similarity)  );
 
