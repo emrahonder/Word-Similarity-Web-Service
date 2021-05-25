@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,28 +19,30 @@ public class SimilarityService {
 
     public static Similarity getSimilarity(String notebook, String word) {
         log.info("Requested: notebook entry={}, search key={}", notebook, word);
-        String[] keys = notebook.split(SPLIT_REGEX);
 
-        int frequency = 0;
-        List<String> similarSet = new ArrayList<>();
+        List<String> entries = Arrays.asList(notebook.split(SPLIT_REGEX));
+        Similarity similarity = Similarity.builder().build();
+        entries.stream().forEach(entry -> calculate(entry, word, similarity)  );
 
+        log.info("Response: frequency={}, similarSet={}", similarity.getFrequency(),
+                similarity.getSimilarWords());
+        return similarity;
+    }
+
+    private static void calculate(String key, String word, Similarity similarity){
         LevenshteinDistance levenshteinDistance = new LevenshteinDistance(THRESHOLD);
-
-        for (String key : keys) {
-            int result = levenshteinDistance.apply(key, word);
-            switch (result) {
-                case EXACT_MATCH:
-                    frequency++;
-                    break;
-                case SIMILAR_MATCH:
-                    similarSet.add(key);
-                    break;
-            }
+        int result = levenshteinDistance.apply(key, word);
+        switch (result) {
+            case EXACT_MATCH:
+                int frequency = similarity.getFrequency();
+                frequency++;
+                similarity.setFrequency(frequency);
+                break;
+            case SIMILAR_MATCH:
+                List<String> similarWords = similarity.getSimilarWords();
+                similarWords.add(key);
+                similarity.setSimilarWords(similarWords);
+                break;
         }
-        log.info("Response: frequency={}, similarSet={}", frequency, similarSet);
-        return Similarity.builder().
-                frequency(frequency).
-                similarWords(similarSet).
-                build();
     }
 }
